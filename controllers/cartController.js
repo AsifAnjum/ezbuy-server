@@ -107,8 +107,6 @@ exports.updateCart = async (req, res) => {
       }
     }
 
-    // await new Promise((resolve) => setTimeout(() => resolve(), 5000));
-
     await cart.save();
 
     response(res, 200, true, "Cart updated successfully", null, cart);

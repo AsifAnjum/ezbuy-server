@@ -32,7 +32,7 @@ exports.getAllProductsService = async (filters, queries) => {
 
   const total = await Product.countDocuments(filters);
   const page = Math.ceil(total / queries.limit);
-  // await new Promise((resolve) => setTimeout(() => resolve(), 5000));
+
   return { total, page, products, limit: queries.limit };
 };
 

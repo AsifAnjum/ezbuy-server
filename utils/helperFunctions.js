@@ -77,34 +77,6 @@ exports.response = (
     responseObj.error = [];
   }
 
-  //! must check
-  // if (error) {
-  //   let customFieldErrors = [];
-
-  //   if (error instanceof mongoose.Error.ValidationError) {
-  //     // Handle ValidationError
-  //     customFieldErrors = Object.keys(error.errors).map((field) => ({
-  //       [field]: error.errors[field].message,
-  //     }));
-  //   } else if (error instanceof mongoose.Error.CastError) {
-  //     // Handle CastError
-  //     customFieldErrors = { [error.path]: error.message };
-  //   } else if (error.code === 11000) {
-  //     // Handle Duplicate Key Error
-  //     const field = Object.keys(error.keyPattern)[0];
-  //     customFieldErrors = [
-  //       {
-  //         [field]: `${field} already exists!`,
-  //       },
-  //     ];
-  //   } else {
-  //     // Handle other errors
-  //     customFieldErrors = { message: error.message || "An unknown error occurred" };
-  //   }
-
-  //   responseObj.error = customFieldErrors;
-  // }
-
   if (data) {
     responseObj.data = data;
   }

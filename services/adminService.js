@@ -74,6 +74,10 @@ exports.productBulkUpdateByAdminService = async (filter, data) => {
   );
 };
 
+exports.removeProductByAdminService = async (id) => {
+  return await Product.deleteOne({ _id: id });
+};
+
 //? coupon
 exports.createCouponService = async (data) => {
   return await Coupon.create(data);
@@ -116,43 +120,6 @@ exports.getOrderByIdStaffService = async (id) => {
 };
 
 exports.dashboardUserDataService = async () => {
-  // const userAnalytics = await User.aggregate([
-  //   {
-  //     $match: {
-  //       role: { $nin: [admin, moderator] },
-  //     },
-  //   },
-  //   {
-  //     $facet: {
-  //       totalUsers: [{ $count: "count" }],
-  //       newUsersOverTime: [
-  //         {
-  //           $group: {
-  //             _id: {
-  //               year: { $year: "$createdAt" },
-  //               month: { $month: "$createdAt" },
-  //             },
-  //             newUsers: { $sum: 1 },
-  //           },
-  //         },
-  //         {
-  //           $sort: { "_id.year": 1, "_id.month": 1 },
-  //         },
-  //       ],
-  //       activeUsersLast30Days: [
-  //         {
-  //           $match: {
-  //             lastLogin: {
-  //               $gte: new Date(new Date().setDate(new Date().getDate() - 30)),
-  //             },
-  //           },
-  //         },
-  //         { $count: "count" },
-  //       ],
-  //     },
-  //   },
-  // ]);
-
   const thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
   const twelveMonthsAgo = new Date(
     new Date().setMonth(new Date().getMonth() - 12)
@@ -390,19 +357,6 @@ exports.dashboardOrderService = async () => {
   // ]);
 
   const orderAnalytics = await Order.aggregate([
-    // Add a conversion stage to ensure `createdAt` is a Date
-    {
-      $addFields: {
-        createdAt: {
-          $convert: {
-            input: "$createdAt",
-            to: "date",
-            onError: null, // Handle errors by setting to null if conversion fails
-            onNull: null, // Handle null cases
-          },
-        },
-      },
-    },
     // Proceed with the original aggregation stages
     {
       $facet: {

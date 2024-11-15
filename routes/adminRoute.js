@@ -34,6 +34,13 @@ router.patch(
   adminController.updateUserStatus
 );
 
+router.delete(
+  "/product/:id",
+  verifyToken,
+  authorization(admin),
+  adminController.deleteProduct
+);
+
 router.get(
   "/orders",
   verifyToken,

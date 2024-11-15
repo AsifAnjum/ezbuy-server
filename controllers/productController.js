@@ -13,7 +13,7 @@ const {
   updateProductService,
   getProductsBySellerService,
 } = require("../services/productService");
-const { productImgPath, user } = require("../utils/constants");
+const { user } = require("../utils/constants");
 const {
   customSlug,
   restrictField,
@@ -268,10 +268,6 @@ exports.updateProduct = async (req, res) => {
       product.salePrice = salePrice;
     }
 
-    // // if (req.files) {
-    // //   const imgUrls = await uploadProductImg(req, res);
-    // // }
-
     for (const field in req.body) {
       product[field] = req.body[field];
     }
@@ -395,12 +391,18 @@ exports.addProductReview = async (req, res) => {
     product.ratingDistribution[rating] += 1;
     product.averageRating.userId.push(userId);
 
-    const totalRating = Object.keys(product.ratingDistribution).reduce(
-      (acc, key) => {
-        return acc + key * product.ratingDistribution[key];
-      },
-      0
-    );
+    // const totalRating = Object.keys(product.ratingDistribution).reduce(
+    //   (acc, key) => {
+    //     return acc + key * product.ratingDistribution[key];
+    //   },
+    //   0
+    // );
+
+    let totalRating = 0;
+
+    for (const [key, value] of Object.entries(product.ratingDistribution)) {
+      totalRating += key * value;
+    }
 
     const avrgRating = Math.min(
       Math.round(totalRating / product.averageRating.userId.length),
@@ -424,46 +426,3 @@ exports.addProductReview = async (req, res) => {
     response(res, 400, false, error.message, error);
   }
 };
-
-//   const { id: prodId, reviewId } = req.params;
-//   try {
-//     if (!userId || !prodId || !reviewId) {
-//       return response(res, 400, false, "No Data found!!!");
-//     }
-
-//     const { rating, comment } = req.body;
-
-//     const product = await getProductByIdService(prodId);
-//     const review = await Review.findById(reviewId);
-
-//     if (!product || !review) {
-//       return response(res, 404, false, "No Product or Review Found!!");
-//     }
-
-//     if (review.user.toString() !== userId) {
-//       return response(
-//         res,
-//         400,
-//         false,
-//         "You are not authorized to update this review"
-//       );
-//     }
-
-//     // Update rating distribution
-//     product.ratingDistribution[review.rating] -= 1;
-//     product.ratingDistribution[rating] += 1;
-
-//     review.rating = rating;
-//     review.comment = comment;
-
-//     await review.save();
-//     product.averageRating.rating = calculateAverageRating(
-//       product.ratingDistribution
-//     );
-//     await product.save();
-
-//     response(res, 200, true, "Review updated successfully", null, review);
-//   } catch (error) {
-//     response(res, 400, false, error.message, error);
-//   }
-// };

@@ -51,7 +51,6 @@ exports.dashboardUserDataService = async (userId) => {
 };
 
 exports.dashboardOrderDataService = async (userId) => {
-  // const orderDataAnalytics = Order.aggregate([
   //   // Match documents for the specific customer
   //   {
   //     $match: {

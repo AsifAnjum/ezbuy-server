@@ -17,13 +17,4 @@ router.post("/", verifyToken, authorization(user), orderController.placeOrder);
 //  Get all orders
 router.get("/", verifyToken, authorization(user), orderController.fetchOrders);
 
-// // Get a specific order by ID
-// router.get("/:orderId", orderController.getOrderById);
-
-// // Update an order by ID
-// router.put("/:orderId", orderController.updateOrder);
-
-// // Delete an order by ID
-// router.delete("/:orderId", orderController.deleteOrder);
-
 module.exports = router;

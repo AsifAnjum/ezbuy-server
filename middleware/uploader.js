@@ -11,7 +11,7 @@ const multer = require("multer");
 const path = require("path");
 
 const { firebaseConfig } = require("../utils/firebaseConfig");
-const { userImgPath, productImgPath } = require("../utils/constants");
+
 const { response } = require("../utils/helperFunctions");
 
 // Initialize Firebase

@@ -7,7 +7,3 @@ exports.getCartByUserIdService = async (id) => {
 exports.createCartService = async (data) => {
   return await Cart.create(data);
 };
-
-// exports.updateCartService = async (id, data) => {
-//   return await Cart.
-// };

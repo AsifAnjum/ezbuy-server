@@ -9,7 +9,7 @@ const {
   dashboardUserDataService,
   dashboardOrderDataService,
 } = require("../services/userService");
-const { userImgPath } = require("../utils/constants");
+
 const sendMail = require("../utils/email");
 const { oauth2Client } = require("../utils/googleClient");
 

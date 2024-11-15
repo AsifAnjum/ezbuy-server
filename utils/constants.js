@@ -26,9 +26,6 @@ exports.failed = "failed";
 exports.solved = "solved";
 exports.rejected = "rejected";
 
-// exports.userImgPath = "user-img";
-// exports.productImgPath = "product-img";
-
 exports.token = (req) => {
   return req?.headers?.authorization?.split(" ")?.[1];
 };

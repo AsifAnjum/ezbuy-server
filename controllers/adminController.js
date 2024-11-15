@@ -14,10 +14,13 @@ const {
   dashboardUserDataService,
   dashboardProductService,
   dashboardOrderService,
+  removeProductByAdminService,
 } = require("../services/adminService");
 const { admin, blocked, moderator } = require("../utils/constants");
 const { response, isObjEmpty } = require("../utils/helperFunctions");
 const { blacklistToken } = require("../utils/token");
+const { getProductByIdService } = require("../services/productService");
+const { deleteImgFromFirebase } = require("../middleware/uploader");
 
 //! user
 exports.fetchAllUser = async (req, res) => {
@@ -141,6 +144,26 @@ exports.productCollectionUpdate = async (req, res) => {
   } catch (error) {
     response(res, error.statusCode || 400, false, error.message, error);
   }
+};
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    const { id: productId } = req.params;
+
+    const product = await getProductByIdService(productId);
+
+    if (!product) {
+      return response(res, 404, false, "Product not found");
+    }
+
+    const imgUrls = product.imgUrls;
+
+    await product.deleteOne();
+
+    deleteImgFromFirebase(imgUrls).then().catch();
+
+    response(res, 200, true, "Product deleted successfully");
+  } catch (error) {}
 };
 
 //? coupon
