@@ -13,7 +13,7 @@ exports.getAllUsersService = async (queries, filters) => {
 
     .select("-password");
 
-  const total = await User.countDocuments();
+  const total = users.length;
   const page = Math.ceil(total / queries.limit);
 
   return { total, page, users };
@@ -92,7 +92,7 @@ exports.getAllCouponService = async (filters, queries) => {
     .skip(queries.skip)
     .limit(queries.limit);
 
-  const total = await Coupon.countDocuments();
+  const total = coupons.length;
   const limit = queries.limit;
   const page = Math.ceil(total / limit);
   return { total, page, limit, coupons };
@@ -109,7 +109,7 @@ exports.getOrderByStaffService = async (filters, queries) => {
     .skip(queries.skip)
     .limit(queries.limit);
 
-  const total = await Order.countDocuments();
+  const total = order.length;
   const limit = queries.limit;
   const page = Math.ceil(total / limit);
   return { total, page, limit, order };
