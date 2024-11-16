@@ -178,7 +178,7 @@ userSchema.methods.generateResetToken = function () {
 
   const date = new Date();
 
-  date.setMinutes(date.getMinutes() + 15); // 5 minutes
+  date.setMinutes(date.getMinutes() + 5); // 5 minutes
   this.passwordResetExpires = date;
 
   return token;

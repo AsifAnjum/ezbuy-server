@@ -5,6 +5,7 @@ exports.createMessageService = async (data) => {
 };
 
 exports.getMessagesService = async (filters, queries) => {
+  const limit = queries.limit;
   const result = await Message.aggregate([
     { $match: filters },
     {
@@ -28,7 +29,7 @@ exports.getMessagesService = async (filters, queries) => {
           { $sort: { sortOrder: 1 } },
           { $project: { sortOrder: 0 } },
           { $skip: queries.skip },
-          { $limit: queries.limit },
+          { $limit: limit },
         ],
       },
     },
@@ -41,7 +42,7 @@ exports.getMessagesService = async (filters, queries) => {
   const rejected = result[0].rejected[0] ? result[0].rejected[0].count : 0;
   const messages = result[0].messages;
 
-  return { total, page, pending, solved, rejected, messages };
+  return { total, page, limit, pending, solved, rejected, messages };
 };
 
 exports.getMessageService = async (id) => {
