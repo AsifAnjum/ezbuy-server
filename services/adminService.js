@@ -1,22 +1,21 @@
-const mongoose = require("mongoose");
 const User = require("../models/User");
-const { admin, moderator } = require("../utils/constants");
+const { admin } = require("../utils/constants");
 const Product = require("../models/Product");
 const Coupon = require("../models/Coupon");
 const Order = require("../models/Order");
-const { ObjectId } = mongoose.Types;
+
 //?user
 exports.getAllUsersService = async (queries, filters) => {
   const users = await User.find(filters)
     .skip(queries.skip)
     .limit(queries.limit)
-
     .select("-password");
-
+  console.log(users);
   const total = await User.countDocuments(filters);
-  const page = Math.ceil(total / queries.limit);
+  const limit = queries.limit;
+  const page = Math.ceil(total / limit);
 
-  return { total, page, users };
+  return { total, page, limit, users };
 };
 
 exports.findUserByAdminService = async (queryObj) => {
