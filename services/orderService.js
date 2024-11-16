@@ -10,7 +10,7 @@ exports.getUserOrderService = async (filters, queries) => {
     .skip(queries.skip)
     .limit(queries.limit);
 
-  const total = order.length;
+  const total = await Order.countDocuments(filters);
   const limit = queries.limit;
   const page = Math.ceil(total / limit);
   return { total, page, limit, order };
